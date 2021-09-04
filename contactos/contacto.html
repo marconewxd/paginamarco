@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi primer sistema</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body>
+  <header>
+    <nav>
+        <section class="contenedor nav">
+            <div class="logo">
+               
+            </div>
+            <div class="enlaces-header">
+                <a href="../index.html">Inicio</a>
+                <a href="../nosotros/nosotros.html">Nosotros</a>
+                <a href="../galeria/galeria.html">Galeria</a>
+                <a href="../contactos/contacto.html">Contacto</a>
+                <a href="#">Ayuda</a>
+            </div>
+            <div class="hamburguer">
+                <i class="fas fa-bars"></i>
+            </div>
+        </section>
+    </nav>         
+</header>
+  
+    <div id="add">
+      
+          <h2>Formulario de contacto</h2>
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                      <input type="text" v-model="usuario.nombre"class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <div id="emailHelp" class="form-text">Ingrese su nombre por favor</div>
+                      <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Email</label>
+                      <input type="email" v-model="usuario.email"class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Edad</label>
+                      <input type="number" v-model="usuario.edad"class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlTextarea1" class="form-label">Mensaje</label>
+                      <textarea class="form-control" v-model="usuario.mensaje" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-primary" v-on:click="registrar()" v-if="sw">Guardar</button>
+                    <button class="btn btn-success" v-on:click="editar()" v-else="sw">Editar</button>
+                  </form>
+              </div>
+              <div class="col">
+
+                <table class="table">
+                  <thead>
+                    <tr >
+                      <th scope="col">Numero</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">edad</th>
+                      <th scope="col">Mensaje</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(usu,index) in usuarios">
+                      <th scope="row">{{index}}</th>
+                      <td>{{usu.nombre}}</td>
+                      <td>{{usu.email}}</td>
+                      <td>{{usu.edad}}</td>
+                      <td>{{usu.mensaje}}</td>
+                      <td><button class="btn btn-outline-danger" v-on:click="eliminar(index)">Eliminar</button>
+                          <button class="btn btn-outline-primary" v-on:click="buscar(usu,index)">ver</button>
+                      </td>
+                    </tr>     
+                  </tbody>
+                </table>
+               
+              </div>
+            </div>
+          </div>
+          <h2>
+          <a href="../index.html">Regresar
+          </a>
+          </h2>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>    
+    <script src="../js/vue.js"></script>
+    <script>
+        app=new Vue({
+            el:"#add",
+            data:{
+                usuario:{nombre:"",edad:"",email:"",mensaje:""},
+                usuarios:[],
+                id:0,
+                sw:true
+            },
+            methods:{
+                registrar: function() {
+                    this.usuarios.push(this.usuario)
+                    this.usuario={nombre:"",edad:"",email:"",mensaje:""},
+                    this.sw=true
+                },
+                eliminar:function(index){
+                this.usuarios.splice(index,1)
+                },
+                
+                buscar:function(usu1,id){
+                  this.usuario={nombre:usu1.nombre,edad:usu1.edad,email:usu1.email,mensaje:usu1.mensaje}
+                  this.id=id;
+                  this.sw=false  
+                },
+                editar:function(){
+                  this.usuarios.splice(this.id,1,this.usuario);
+                  this.usuario={nombre:"",edad:"",email:"",mensaje:""},
+                  this.sw=true
+                }
+            }
+        })
+    </script>
+    
+</body>
+<footer>
+  <p>&copy; Copyright 2021 Pagina Web Marck</p>
+  <ul>
+    <a href="./acer/acerca-de.html">Acerca de</a>
+    <a href="/conectar">Conectar</a>
+    <a href="/rrss">Redes Sociales</a>
+  </ul>
+</footer>
+</html>
